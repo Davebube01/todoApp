@@ -1,7 +1,7 @@
 h1{
   text-align: center;
   color: white;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 
 .App{
@@ -23,6 +23,7 @@ h1{
 .todo-form{
   display: flex;
   flex-flow: row;
+  margin-top: 35px;
 }
 
 .todo-input{
@@ -51,6 +52,18 @@ h1{
   background-color: #928490;
 }
 
+.todo p:hover {
+  cursor: pointer;
+}
+
 i{
   margin-right: 10px;
+}
+
+i:hover{
+  cursor: pointer;
+}
+
+.completed{
+  text-decoration: line-through;
 }

@@ -1,6 +1,7 @@
 import AppTodoForm from "./todoForm";
 import { useState } from "react";
 import AppTodo from "./todo";
+import AppEditTodoForm from "./editTodoForm";
 import { v4 as uuidv4 } from "uuid";
 uuidv4;
 
@@ -20,21 +21,61 @@ export default function AppTodoWrapper() {
     console.log(todos);
   };
 
+  //   Toggle complete function creation
+  //   of course check this function for further understanding
+  const toggleComplete = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
+  //   Delete todo
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  //   Edit Todo
+  const editTodo = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, isEditing: !todo.isEditing } : todo
+      )
+    );
+  };
+
+  //   currently edting task function
+  const editTask = (task, id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, task, isEditing: !todo.isEditing } : todo
+      )
+    );
+  };
+
   return (
     <Container fluid>
       <Row className="justify-content-center">
         <Col sm={12} md={10} lg={6}>
-            
           <div className="todo-wrapper">
-          <h1>Get Things Done Innit!</h1>
+            <h1>Get Things Done Innit!</h1>
             <AppTodoForm addTodo={addTodo} />
-            {
-                todos.map((todo, index) => {
-                    // This is to map through the tasks inputed and put tehm in the list todo so
-                    // as for them to be displayed
-                    return <AppTodo task={todo} key={index} />
-                })
-            }
+            {todos.map((todo, index) => {
+              // This is to map through the tasks inputed and put them in the list todo so
+              // as for them to be displayed
+              return todo.isEditing ? (
+                <AppEditTodoForm editTodo={editTask} task={todo}/>
+              ) : (
+                <AppTodo
+                  task={todo}
+                  key={index}
+                  toggleComplete={toggleComplete}
+                  deleteTodo={deleteTodo}
+                  editTodo={editTodo}
+                />
+              );
+            })}
           </div>
         </Col>
       </Row>
