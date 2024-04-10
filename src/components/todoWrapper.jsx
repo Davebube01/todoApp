@@ -1,5 +1,5 @@
 import AppTodoForm from "./todoForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AppTodo from "./todo";
 import AppEditTodoForm from "./editTodoForm";
 import { v4 as uuidv4 } from "uuid";
@@ -10,7 +10,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 export default function AppTodoWrapper() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    const localValue = localStorage.getItem("ITEMS")
+    if (localValue == null) return []
+
+    return JSON.parse(localValue)
+  });
+
+  // This is used to save my todo list on my local storage and on each refresh, it remains there 
+  useEffect(() => {
+    localStorage.setItem("ITEMS", JSON.stringify(todos))
+  }, [todos])
 
   //   function to create new entry in the todo list with unique ids and all
   const addTodo = (todo) => {

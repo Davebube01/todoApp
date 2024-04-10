@@ -8,7 +8,7 @@ export default function AppEditTodoForm({ editTodo, task }) {
 
     editTodo(value, task.id);
 
-    // to ensure after todo has been sent in,x the input returns back to nothing
+    // to ensure after todo has been sent in, the input returns back to nothing
     setValue("");
   };
 
